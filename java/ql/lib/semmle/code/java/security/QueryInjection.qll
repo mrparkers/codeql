@@ -66,3 +66,17 @@ private class MongoJsonStep extends AdditionalQueryInjectionTaintStep {
     )
   }
 }
+
+/** A sink for JdbcTemplate injection vulnerabilities. */
+private class JdbcTemplateInjectionSink extends QueryInjectionSink {
+  JdbcTemplateInjectionSink() {
+    exists(MethodAccess call |
+      call.getMethod().getDeclaringType().hasQualifiedName("org.springframework.jdbc.core", "JdbcTemplate") and
+      (
+        call.getMethod().hasName("queryForObject") or
+        call.getMethod().hasName("update")
+      ) and
+      this.asExpr() = call.getArgument(0)
+    )
+  }
+}
