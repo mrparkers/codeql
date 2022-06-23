@@ -9,7 +9,9 @@ struct SwiftExtractorConfiguration {
   std::string trapDir;
   // The location for storing extracted source files.
   std::string sourceArchiveDir;
-  // The arguments passed to the extractor. Used for debugging.
+  // The original arguments passed to the extractor. Used for debugging.
   std::vector<std::string> frontendOptions;
+  // The patched arguments passed to the swift::performFrontend/ Used for debugging.
+  std::vector<std::string> patchedFrontendOptions;
 };
 }  // namespace codeql
